@@ -1,0 +1,16 @@
+annotations:
+  category: stable
+apiVersion: v1
+name:  
+version: 0.0.1
+appVersion: 0.0.0
+description: CMS INFN Analysis Facility umbrella chart
+keywords:
+- jupyterhub
+- LHC
+- CMS
+- Analysis
+icon: https://cylindricalonion.web.cern.ch/sites/cylindricalonion.web.cern.ch/files/logo/COlogo_01.png
+maintainers:
+- name: dciangot
+  email: diego.ciangottini@pg.infn.it

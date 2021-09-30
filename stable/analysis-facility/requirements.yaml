@@ -1,0 +1,9 @@
+dependencies:
+
+- name: JHUBaaS
+  version: "3.0.3"
+  repository: https://dodas-ts.github.io/helm_charts
+
+- name: htcondor
+  version: "2.1.13"
+  repository: https://dodas-ts.github.io/helm_charts 
