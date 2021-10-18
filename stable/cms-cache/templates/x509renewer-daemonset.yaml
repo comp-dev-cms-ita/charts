@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: DaemonSet 
+metadata:
+  name: x509renewer
+  namespace: cache
+  labels:
+    app.kubernetes.io/name: x509renewer
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: x509renewer
+    spec:
+      containers:
+      - name: renewer
+        #livenessProbe:
+        #  exec:
+        #    command:
+        #    - ls
+        #    - /cvmfs/*
+        #  initialDelaySeconds: 30
+        #  periodSeconds: 600
+        image: "dodasts/x509-renewer:v1" 
+        imagePullPolicy: Always 
+        args:
+        - bash
+        - -c
+        - "cd /etc/certs && while true; do voms-proxy-info --file /etc/x509proxy/proxy --exists --valid 1:00 || voms-proxy-init --voms cms --cert usercert.pem --key usercert.key --debug --out /etc/x509proxy/proxy; sleep 600; done"
+        securityContext:
+          privileged: true
+          capabilities:
+            add:
+            - SYS_ADMIN
+        volumeMounts:
+        - mountPath: "/etc/x509proxy"
+          name: x509-proxy
+        - mountPath: "/etc/certs"
+          name: certs
+      restartPolicy: Always
+      volumes:
+      - name: x509-proxy
+        hostPath:
+          path: "/var/lib/x509-{{ .Release.Namespace }}-{{ .Release.Name }}"
+          type: DirectoryOrCreate
+      - name: certs 
+        secret:
+          secretName: cache-x509 
+          defaultMode: 0600 
+
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: x509renewer
