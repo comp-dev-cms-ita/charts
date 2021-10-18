@@ -13,9 +13,16 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
+# Analysis infrastructure deployment
 
-This chart will deploy:
-- 
+![Overvew schema](./overview_schema.png)
+
+The analysis infrastructure is composed by several components:
+- ..
+
+## Helm Chart
+The chart will deploy:
+- ..
 
 ## Minimun set of values to fill
 
