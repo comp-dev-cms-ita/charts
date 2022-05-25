@@ -1,7 +1,7 @@
 annotations:
   category: stable
 apiVersion: v1
-name:  
+name: af 
 version: 0.0.1
 appVersion: 0.0.0
 description: CMS INFN Analysis Facility umbrella chart

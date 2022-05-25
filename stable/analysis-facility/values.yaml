@@ -6,10 +6,6 @@ htcondor:
   schedd:
     enabled: true
     mapfile: |
-      SCITOKENS https:\/\/cms-auth.web.cern.ch\/,0c765e2d-993e-4ed2-abf8-9c54dcc34546  ttedesch
-      SCITOKENS https:\/\/cms-auth.web.cern.ch\/,4619b517-39d1-4b76-87df-69cbb15a0dee mtracoll
-      SCITOKENS https:\/\/cms-auth.web.cern.ch\/,78f275d5-bb1a-4b2d-9956-f82316a8482e spiga
-      SCITOKENS https:\/\/cms-auth.web.cern.ch\/,c4b22a94-6dda-4312-b77f-726813e963ae dciangot
       PASSWORD (*.) condor
       GSI (.*) anonymous
     extraconfig: ""
@@ -19,14 +15,14 @@ htcondor:
       nodePort: 31618
       targetPort: 31618
     image:
-      name: dodasts/submit
-      tag: "8.9.9-el7-useradd-patched"
+      name: ghcr.io/comp-dev-cms-ita/htcondor-schedd
+      tag: "v2.0.0-pre1"
       pullPolicy: IfNotPresent
     persistence:
       spooldir:
         enabled: true
-        storageClass: openebs-hostpath
-        size: 20Gi
+        storageClass: rook-cephfs 
+        size: 40Gi
     requests:
       memory: "500M"
       cpu: "100m"
@@ -42,7 +38,7 @@ htcondor:
       targetPort: 30618
     image:
       name: dodasts/cm
-      tag: "8.9.9-el7"
+      tag: "9.8.0-el7"
       pullPolicy: IfNotPresent
     requests:
       memory: "500M"
@@ -52,8 +48,8 @@ htcondor:
     enabled: false
     replicas: 0
     image:
-      name: ghcr.io/dodas-ts/htc-dask-wn
-      tag: v0.0.24-dask
+      name: ghcr.io/comp-dev-cms-ita/htc-dask-wn
+      tag: v2.0.0-pre1
       pullPolicy: IfNotPresent
     # Condor slot type
     slotType: cpus=1, mem=2000
@@ -125,20 +121,12 @@ htcondor:
     #      test
     # default.local file content
     defaultLocalConfig:
-      [
-        {
-            content: "CVMFS_SERVER_URL=http://131.154.97.118/cvmfs/cms.dodas.infn.it
-
-              CVMFS_PUBLIC_KEY=/etc/cvmfs/keys/cms.dodas.infn.it/cms.\
-              dodas.infn.it.pub
-
-              CVMFS_HTTP_PROXY=DIRECT
-
-              CVMFS_DEBUGFILE=/tmp/cvmfs_cms_dodas.log\n",
-            file: cms.dodas.infn.it.conf
-          }
-      ]
-
+    - content: |
+        CVMFS_SERVER_URL=http://131.154.97.118/cvmfs/cms.dodas.infn.it
+        CVMFS_PUBLIC_KEY=/etc/cvmfs/keys/cms.dodas.infn.it/cms.dodas.infn.it.pub
+        CVMFS_HTTP_PROXY=DIRECT
+        CVMFS_DEBUGFILE=/tmp/cvmfs_cms_dodas.log
+      file: cms.dodas.infn.it.conf
 
 JHUBaaS:
   #overide defaault ingress
@@ -213,21 +201,35 @@ JHUBaaS:
         dynamic:
           storageClass: openebs-hostpath
         extraVolumeMounts:
-          - mountPath: cvmfs
-            name: cvmfs
+        - mountPath: cvmfs
+          name: cvmfs
+        - mountPath: /opt/conda/lib/python3.9/site-packages/dask_labextension/labextension.yaml
+          name: labext
+          subPath: labextension.yaml
+        - mountPath: /opt/conda/etc/jupyter/jupyter_notebook_config.json
+          name: ruciolabcfg
+          subPath: jupyter_notebook_config.json
+        - mountPath: /etc/rucio
+          name: ruciocfg
+        - mountPath: /etc/xrootd/client.plugins.d
+          name: xcachecfg
         extraVolumes:
-          - hostPath:
-              path: /cvmfs-af-htc
-              type: Directory
-            name: cvmfs
-        # extraVolumeMounts: [ { mountPath: /etc/certs, name: hostcerts } ],
-        # extraVolumes:
-        #     [
-        #       {
-        #           name: hostcerts,
-        #           secret: { defaultMode: 420, secretName: dask-tls }
-        #         }
-        #     ],
+        - hostPath:
+            path: /cvmfs-af-htc
+            type: Directory
+          name: cvmfs
+        - configMap:
+            name: labext
+          name: labext
+        - configMap:
+            name: ruciolabcfg
+          name: ruciolabcfg
+        - configMap:
+            name: ruciocfg
+          name: ruciocfg
+        - configMap:
+            name: xcachecfg
+          name: xcachecfg
     hub:
       image:
         name: ghcr.io/dodas-ts/jhub
