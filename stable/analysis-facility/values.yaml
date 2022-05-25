@@ -101,19 +101,19 @@ htcondor:
     # List of repos to be mounted
     repoList: cms.cern.ch  grid.cern.ch cms.dodas.infn.it
 
-    privKey:
-      content: |
-        -----BEGIN PUBLIC KEY-----
-          MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv+tRiuIATB34qt+4JVuY
-          kVRaIHE8wvGGCT9xQtItEB9uxzdnreMKjpWyS8LReS2Af5AXqiXNX8BYqVWMcQa3
-          O4WkQfUA/a65k6uKTMaptZu0hFCKU38Op2lMgq+vCWw1PmRmbJ77Zsrp+Gh5oJCw
-          tUwKvYxGu0ONE7GmcbymCv9J9Z6MTzTazXbR4ntm6A03EtTps9hDceNH7/v8HoJz
-          5bW5rAe9lwYoJiaXVPWmfKV3PeNPdQp0BOu/iFOJzzRrVWkTew1NBH4DDnx2Chsu
-          BPv1RaGNzMJiNNxEIBbPZbDwTg5irlbT32d/qZDygWIdl3o0YcVSQr6w1gd+aTr6cwIDAQAB
-          -----END PUBLIC KEY-----
-      filename: cms.dodas.infn.it.pub,
-      name: cms-dodas,
-      path: keys/cms.dodas.infn.it
+    privKey: []
+      # content: |
+      #   -----BEGIN PUBLIC KEY-----
+      #     MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAv+tRiuIATB34qt+4JVuY
+      #     kVRaIHE8wvGGCT9xQtItEB9uxzdnreMKjpWyS8LReS2Af5AXqiXNX8BYqVWMcQa3
+      #     O4WkQfUA/a65k6uKTMaptZu0hFCKU38Op2lMgq+vCWw1PmRmbJ77Zsrp+Gh5oJCw
+      #     tUwKvYxGu0ONE7GmcbymCv9J9Z6MTzTazXbR4ntm6A03EtTps9hDceNH7/v8HoJz
+      #     5bW5rAe9lwYoJiaXVPWmfKV3PeNPdQp0BOu/iFOJzzRrVWkTew1NBH4DDnx2Chsu
+      #     BPv1RaGNzMJiNNxEIBbPZbDwTg5irlbT32d/qZDygWIdl3o0YcVSQr6w1gd+aTr6cwIDAQAB
+      #     -----END PUBLIC KEY-----
+      # filename: cms.dodas.infn.it.pub,
+      # name: cms-dodas,
+      # path: keys/cms.dodas.infn.it
     #  - name: spiga
     #    path: spiga.local.repo
     #    filename: spiga.local.repo.pub
