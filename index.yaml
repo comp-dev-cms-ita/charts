@@ -1,0 +1,31 @@
+apiVersion: v1
+entries:
+  af:
+  - annotations:
+      category: stable
+    apiVersion: v1
+    appVersion: 0.0.0
+    created: "2022-05-25T06:53:06.062825624Z"
+    dependencies:
+    - name: JHUBaaS
+      repository: https://dodas-ts.github.io/helm_charts
+      version: 3.0.3
+    - name: htcondor
+      repository: https://dodas-ts.github.io/helm_charts
+      version: 2.1.13
+    description: CMS INFN Analysis Facility umbrella chart
+    digest: d342aea1986d2d2b677e7c2008b7c9ff3369a39c058f255415d735b06dcc48eb
+    icon: https://cylindricalonion.web.cern.ch/sites/cylindricalonion.web.cern.ch/files/logo/COlogo_01.png
+    keywords:
+    - jupyterhub
+    - LHC
+    - CMS
+    - Analysis
+    maintainers:
+    - email: diego.ciangottini@pg.infn.it
+      name: dciangot
+    name: af
+    urls:
+    - https://comp-dev-cms-ita.github.io/charts/af-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-05-25T06:53:06.044145091Z"
